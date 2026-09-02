@@ -1,0 +1,111 @@
+/* login page */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(86, 224, 59, 0.6)
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    width: 360px;
+    padding: 36px 40px;
+    background-color: rgba(255, 255, 255, 0.97);
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.login-brand {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #1a1a1a;
+    text-decoration: none;
+    margin-bottom: 6px;
+}
+
+.login h1,
+.login h2 {
+    margin: 0 0 10px;
+    font-size: 22px;
+    text-align: center;
+    color: #1a1a1a;
+}
+
+.login-subtext {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin: 0 0 24px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.login label,
+.login-form label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.login input,
+.login-form input {
+    width: 100%;
+    padding: 11px 14px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+}
+
+.login input:focus,
+.login-form input:focus {
+    outline: none;
+    border-color: #7ddf2d;
+    box-shadow: 0 0 0 3px rgba(125, 223, 45, 0.3);
+}
+
+.login button,
+.login-btn {
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #7ddf2d;
+    color: #1a1a1a;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.login button:hover,
+.login-btn:hover {
+    background-color: #6bc71f;
+}
+
+.login-footer-text {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    margin-top: 20px;
+}
+
+.login-footer-text a {
+    color: #1a1a1a;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.login-footer-text a:hover {
+    text-decoration: underline;
+}

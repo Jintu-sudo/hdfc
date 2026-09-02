@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your shopping cart at Action-Figurine.">
+    <title>Your Cart | Action-Figurine</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.png">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/cart.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a class="brand-logo" href="dashboard.html">Action-Figurine</a>
+            <ul>
+                <li><a href="dashboard.html">Home</a></li>
+                <li><a href="anime.html">Anime</a></li>
+                <li><a href="marvel.html">Marvel</a></li>
+                <li><a href="dc.html">DC</a></li>
+                <li><a href="starwars.html">Star Wars</a></li>
+                <li><a href="profile.html"><img src="assets/profile.png" alt="Profile"></a></li>
+                <li><a href="cart.html"><img src="assets/shopping-cart.png" alt="Cart"></a></li>
+                <li><a href="login.html" class="logout-btn" id="logoutBtn">Log Out</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="cart-page">
+            <h1>Your Cart</h1>
+
+            <div class="cart-layout">
+                <div class="cart-items">
+                    <div class="cart-item">
+                        <img src="assets/batman.jpg" alt="Batman Action Figure">
+                        <div class="cart-item-info">
+                            <h3>Batman: Arkham Knight Edition</h3>
+                            <p class="cart-item-price">$34.99</p>
+                        </div>
+                        <div class="cart-item-qty">
+                            <label for="qty1">Qty</label>
+                            <input type="number" id="qty1" value="1" min="1">
+                        </div>
+                        <button type="button" class="remove-btn">Remove</button>
+                    </div>
+
+                    <div class="cart-item">
+                        <img src="assets/darthvader.jpg" alt="Darth Vader Action Figure">
+                        <div class="cart-item-info">
+                            <h3>Darth Vader: Dark Lord Edition</h3>
+                            <p class="cart-item-price">$42.99</p>
+                        </div>
+                        <div class="cart-item-qty">
+                            <label for="qty2">Qty</label>
+                            <input type="number" id="qty2" value="1" min="1">
+                        </div>
+                        <button type="button" class="remove-btn">Remove</button>
+                    </div>
+
+                    <div class="cart-item">
+                        <img src="assets/naruto.jpg" alt="Naruto Uzumaki Action Figure">
+                        <div class="cart-item-info">
+                            <h3>Naruto Uzumaki: Sage Mode Figure</h3>
+                            <p class="cart-item-price">$24.99</p>
+                        </div>
+                        <div class="cart-item-qty">
+                            <label for="qty3">Qty</label>
+                            <input type="number" id="qty3" value="2" min="1">
+                        </div>
+                        <button type="button" class="remove-btn">Remove</button>
+                    </div>
+                </div>
+
+                <div class="cart-summary">
+                    <h2>Order Summary</h2>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>$127.96</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span>$5.00</span>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <span>$132.96</span>
+                    </div>
+                    <button type="button" class="checkout-btn">Proceed to Checkout</button>
+                    <a href="dashboard.html" class="continue-shopping">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; All copyrights reserved by anonymous person 2026.
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

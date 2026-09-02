@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Log in to your Action-Figurine account.">
+    <title>Log In | Action-Figurine</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.png">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/login.css">
+</head>
+<body>
+    <div class="login-page">
+        <div class="login">
+            <a href="dashboard.html" class="login-brand">Action-Figurine</a>
+            <h1>Welcome Back</h1>
+            <p class="login-subtext">Log in to continue shopping</p>
+
+            <form class="login-form">
+                <label for="username">Email / Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your email or username">
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password">
+
+                <button type="button" class="login-btn" onclick="window.location.href='dashboard.html'">Log In</button>
+            </form>
+
+            <p class="login-footer-text">Don't have an account? <a href="#">Sign Up</a></p>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

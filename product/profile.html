@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your Action-Figurine account profile.">
+    <title>My Profile | Action-Figurine</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.png">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/profile.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a class="brand-logo" href="dashboard.html">Action-Figurine</a>
+            <ul>
+                <li><a href="dashboard.html">Home</a></li>
+                <li><a href="anime.html">Anime</a></li>
+                <li><a href="marvel.html">Marvel</a></li>
+                <li><a href="dc.html">DC</a></li>
+                <li><a href="starwars.html">Star Wars</a></li>
+                <li><a href="profile.html"><img src="assets/profile.png" alt="Profile"></a></li>
+                <li><a href="cart.html"><img src="assets/shopping-cart.png" alt="Cart"></a></li>
+                <li><a href="login.html" class="logout-btn" id="logoutBtn">Log Out</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="profile-page">
+            <div class="profile-header">
+                <img src="assets/profile.png" alt="Profile Picture" class="profile-avatar">
+                <div>
+                    <h1 id="profileName">Jintu Sharma</h1>
+                    <p class="profile-email" id="profileEmail">jintu@example.com</p>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h2>Account Details</h2>
+                <form class="profile-form">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" value="Jintu Sharma">
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" value="jintu@example.com">
+
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" value="+91 98765 43210">
+
+                    <label for="address">Shipping Address</label>
+                    <textarea id="address" rows="3">123 Comic Lane, Guwahati, Assam, India</textarea>
+
+                    <button type="submit" class="save-btn">Save Changes</button>
+                </form>
+            </div>
+
+            <div class="profile-section">
+                <h2>Order History</h2>
+                <ul class="order-list">
+                    <li>
+                        <span>Batman: Arkham Knight Edition</span>
+                        <span>$34.99</span>
+                        <span class="order-status">Delivered</span>
+                    </li>
+                    <li>
+                        <span>Naruto Uzumaki: Sage Mode Figure</span>
+                        <span>$24.99</span>
+                        <span class="order-status">Shipped</span>
+                    </li>
+                    <li>
+                        <span>Darth Vader: Dark Lord Edition</span>
+                        <span>$42.99</span>
+                        <span class="order-status">Processing</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; All copyrights reserved by anonymous person 2026.
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

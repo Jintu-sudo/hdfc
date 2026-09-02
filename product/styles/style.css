@@ -1,0 +1,145 @@
+* {
+    box-sizing: border-box;
+    font-family: Book Antiqua, Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    text-align: center;
+    padding: 16px;
+}
+
+
+/* navbar */
+.navbar {
+    display: flex;
+    align-items: stretch;
+}
+
+.navbar ul {
+    flex: 1;
+    justify-content: flex-end;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    background-color: #7ddf2d;
+}
+
+.navbar ul li a {
+    display: block;
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar ul li a:hover {
+    background-color: #555555;
+    color: rgb(228, 225, 82);
+}
+
+.navbar ul li img {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: none;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+.logout-btn {
+    background-color: #e63946;
+    color: white !important;
+    border-radius: 4px;
+    margin: 0 10px;
+    padding: 8px 14px !important;
+}
+
+.logout-btn:hover {
+    background-color: #c1121f !important;
+}
+
+
+/* product listing / cards */
+.product-section {
+    padding: 16px;
+}
+
+.product-section h1 {
+    margin: 0 0 16px;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.card a {
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.card img {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    display: block;
+}
+
+.card h3 {
+    min-height: 48px;
+}
+
+.card button {
+    margin: 0 10px 10px;
+    padding: 8px;
+    cursor: pointer;
+    background-color: bisque;
+}
+
+.card .buy-btn {
+    background-color: #e63946;
+    color: white;
+    border: none;
+}
+
+.card .buy-btn:hover {
+    background-color: #c1121f;
+}

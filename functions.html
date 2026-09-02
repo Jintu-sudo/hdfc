@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <style>
+            * {
+                background-color: black;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <p id="hey"></p>
+        <p id="hey1"></p>
+        <p id="hey2"></p>
+        <p id="hey3"></p>
+        <p id="hey4"></p>
+        <p id="hey5"></p>
+        <p id="hey6"></p>
+        <p id="hey7"></p>
+        <p id="hey8"></p>
+
+        <script>
+            function sayHello() {
+                console.log("Hello there!")
+            }
+
+            sayHello();
+            sayHello();
+
+            function greetUser(name){
+                return(`Hello, ${name}`);
+            }
+
+            document.getElementById("hey").innerHTML = greetUser("Jintu");
+
+
+            function addNumbers(a, b) {
+                return a + b;
+            }
+
+            document.getElementById("hey1").innerHTML = addNumbers(5, 6);
+
+
+            function isEven(num) {
+                    return num % 2 === 0;
+            }
+            document.getElementById("hey2").innerHTML = isEven(9);
+            document.getElementById("hey3").innerHTML = isEven(10);
+            
+
+            function greet(name = "Guest") {
+                return `Welcome, ${name}`;
+            }
+
+            document.getElementById("hey4").innerHTML = greet();
+
+
+
+            const a =  function(a, b) {
+                return a + b;
+            }
+
+            document.getElementById("hey5").innerHTML = a(5, 6);
+
+
+            const b =  (a, b) =>  a + b;
+
+            document.getElementById("hey6").innerHTML = b(5, 11);
+
+            const square =  sqnum => sqnum * sqnum;
+            
+            document.getElementById("hey7").innerHTML = square(9);
+
+
+            function calculateDiscount(price, discountPercent = 10) {
+                return (price - (price * (discountPercent/100)));
+            }
+
+            const formatPrice = amount => `$${amount}`;
+
+            document.getElementById("hey8").innerHTML = formatPrice(calculateDiscount(200, 20));
+
+   
+
+        </script>
+    </body>
+</html>

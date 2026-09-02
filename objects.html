@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <style>
+            * {
+                background-color: black;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            const student = {
+                name: "jintu",
+                age: 21,
+                grade: 98
+            };
+            console.log(student);
+
+            document.write(student.name,  student["age"] + "<br>");
+
+            student.school = "Don Bosco";
+
+            console.log(student)
+
+            student.grade = 69;
+            console.log(student);
+
+            delete student["school"];
+            console.log(student);
+
+            student.sayHi = function() {
+                return "Hello";
+            }
+
+            for (let x in student) {
+                if  (typeof student[x] == "function") {
+                    continue;   
+                }
+                document.write(x + ": " + student[x] + "<br>");
+            }
+        </script>
+    </body>
+</html>
