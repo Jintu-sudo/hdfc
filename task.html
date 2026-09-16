@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React Basics</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+    function LoginPage({username, setUsername, password, setPassword, setIsLoggedIn}) {
+
+        function credentialsCheck() {
+            if(username === "user" && password === "hello"){
+                 setIsLoggedIn(true);
+        }
+
+        }
+
+        return (
+            <>
+                <input 
+                    value={username}
+                    placeholder="username"
+                    onChange={(e) => setUsername(e.target.value)} 
+                />
+                <input 
+                    type="password" 
+                    placeholder="password" 
+                    value = {password} 
+                    onChange={(e) => setPassword(e.target.value)} 
+                />
+                <button 
+                    onClick={credentialsCheck}>
+                    Log In
+                </button>
+            </>
+        );
+    }
+
+    function Dashboard() {
+        return (
+            <h1>Hello welocme to dashboard</h1>
+        )
+    }
+
+    function App() {
+        const [username, setUsername] = React.useState('');
+        const [password, setPassword] = React.useState('');
+        const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+        return(
+            <>
+                {isLoggedIn? (
+                    <Dashboard />
+                ) : (
+                    <LoginPage 
+                        username = {username} 
+                        setUsername = {setUsername} 
+                        password = {password} 
+                        setPassword = {setPassword} 
+                        setIsLoggedIn = {setIsLoggedIn}
+                    />
+                )}
+
+            </>
+        );
+    }
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App />);
+    </script>
+  </body>
+</html> 
