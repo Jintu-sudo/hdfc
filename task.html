@@ -12,13 +12,15 @@
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
 
-    function LoginPage({username, setUsername, password, setPassword, setIsLoggedIn}) {
+    function LoginPage({username, setUsername, password, setPassword, setIsLoggedIn, errorMessage, seterrorMessage}) {
 
         function credentialsCheck() {
             if(username === "user" && password === "hello"){
                  setIsLoggedIn(true);
-        }
-
+            }
+            else {
+                seterrorMessage("Wrong Credentials")
+            }
         }
 
         return (
@@ -27,24 +29,71 @@
                     value={username}
                     placeholder="username"
                     onChange={(e) => setUsername(e.target.value)} 
-                />
+                /><br />
                 <input 
                     type="password" 
                     placeholder="password" 
                     value = {password} 
                     onChange={(e) => setPassword(e.target.value)} 
-                />
+                /><br />
                 <button 
                     onClick={credentialsCheck}>
                     Log In
                 </button>
+
+                {errorMessage && <p>{errorMessage}</p>}
             </>
         );
     }
 
-    function Dashboard() {
+    function Dashboard({setIsLoggedIn}) {
+        
+        const [tasks, setTasks] = React.useState([{id: 1, name: 'learn react'}, {id: 2, name: 'apply knwoledge'}]);
+        const [newTaskName, setTaskName] = React.useState('')
+
+        function addTask() {
+            const newTask = { id: Date.now(), name: newTaskName };
+            setTasks([...tasks, newTask]);
+            setTaskName('');
+        }
+
+        function deleteTask(idToDelete) {
+            const updatedTasks = tasks.filter((task) => task.id !== idToDelete);
+            setTasks(updatedTasks);
+        }
+
         return (
-            <h1>Hello welocme to dashboard</h1>
+            <>
+                <h1>Hello welocme to dashboard</h1>
+                <button 
+                    onClick={() => setIsLoggedIn(false)}>
+                    Log Out
+                </button><br />
+
+                <h2>TODO LIST</h2>
+
+                <input placeholder="add items"
+                    value={newTaskName}
+                    onChange={(e) => setTaskName(e.target.value)}  
+                /><br />
+
+                <button onClick={addTask}>
+                    ADD
+                </button>
+
+                <table>
+                    <tbody>
+                        {tasks.map((task) => (
+                            <tr key={task.id}>
+                                <td>{task.name}</td>
+                                <td><button onClick={() => deleteTask(task.id)}>Delete</button></td>
+                                <td><button>Edit</button></td>
+                            </tr>
+                            
+                        ))}
+                    </tbody>
+                </table>
+            </>
         )
     }
 
@@ -52,11 +101,14 @@
         const [username, setUsername] = React.useState('');
         const [password, setPassword] = React.useState('');
         const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+        const [errorMessage, seterrorMessage] = React.useState('');
 
         return(
             <>
                 {isLoggedIn? (
-                    <Dashboard />
+                    <Dashboard
+                        setIsLoggedIn = {setIsLoggedIn}
+                    />
                 ) : (
                     <LoginPage 
                         username = {username} 
@@ -64,12 +116,15 @@
                         password = {password} 
                         setPassword = {setPassword} 
                         setIsLoggedIn = {setIsLoggedIn}
+                        errorMessage = {errorMessage}
+                        seterrorMessage = {seterrorMessage}
                     />
                 )}
 
             </>
         );
     }
+    
       const container = document.querySelector('.js-container');
       ReactDOM.createRoot(container).render(<App />);
     </script>
