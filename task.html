@@ -47,12 +47,15 @@
     }
 
     function Dashboard({setIsLoggedIn}) {
-        
+    
         const [tasks, setTasks] = React.useState([{id: 1, name: 'learn react'}, {id: 2, name: 'apply knwoledge'}]);
         const [newTaskName, setTaskName] = React.useState('')
+        const [editingTaskId, setEditingTaskId] = React.useState(null);
+        const [editedName, setEditedName] = React.useState('');
 
         function addTask() {
-            const newTask = { id: Date.now(), name: newTaskName };
+            const newId = tasks.length > 0 ? Math.max(...tasks.map(t => t.id)) + 1 : 1;
+            const newTask = { id: newId, name: newTaskName };
             setTasks([...tasks, newTask]);
             setTaskName('');
         }
@@ -60,6 +63,19 @@
         function deleteTask(idToDelete) {
             const updatedTasks = tasks.filter((task) => task.id !== idToDelete);
             setTasks(updatedTasks);
+        }
+
+        function editTask(idToEdit, newName) {
+            const updatedTasks = tasks.map((task) => {
+                if (task.id === idToEdit) {
+                    return { ...task, name: newName };
+                } else {
+                    return task;
+                }
+            });
+            setTasks(updatedTasks);
+            setEditingTaskId(null);
+            setEditedName('');
         }
 
         return (
@@ -83,25 +99,46 @@
 
                 <table>
                     <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <th>Task</th>
+                            <th>Delete</th>
+                            <th>Edit</th>
+                        </tr>
                         {tasks.map((task) => (
                             <tr key={task.id}>
-                                <td>{task.name}</td>
+                                <td>{task.id}</td>
+                                <td>
+                                    {editingTaskId === task.id ? (
+                                        <input 
+                                            value={editedName}
+                                            onChange={(e) => setEditedName(e.target.value)}
+                                        />
+                                    ) : (
+                                        task.name
+                                    )}
+                                </td>
                                 <td><button onClick={() => deleteTask(task.id)}>Delete</button></td>
-                                <td><button>Edit</button></td>
+                                <td>
+                                    {editingTaskId === task.id ? (
+                                        <button onClick={() => editTask(task.id, editedName)}>Save</button>
+                                    ) : (
+                                        <button onClick={() => {setEditingTaskId(task.id); setEditedName(task.name);}}>Edit</button>
+                                    )}
+                                </td>
                             </tr>
-                            
                         ))}
                     </tbody>
                 </table>
             </>
         )
-    }
+}
 
     function App() {
         const [username, setUsername] = React.useState('');
         const [password, setPassword] = React.useState('');
-        const [isLoggedIn, setIsLoggedIn] = React.useState(false);
         const [errorMessage, seterrorMessage] = React.useState('');
+        const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
         return(
             <>
@@ -129,4 +166,4 @@
       ReactDOM.createRoot(container).render(<App />);
     </script>
   </body>
-</html> 
+</html>
