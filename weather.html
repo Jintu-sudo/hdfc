@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>React Basics</title>
+</head>
+
+<body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+        function WeatherTable() {
+
+            const [weather, setweather] = React.useState(null);
+            const [location, setlocation] = React.useState('');
+            const [loading, setloading] = React.useState(false);
+            const [error, seterror] = React.useState(null);
+
+            async function getWeather() {
+                setloading(true);
+                seterror(null);
+
+                try {
+                    const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location}`);
+                    const geoData = await geoRes.json();
+                    if (!geoData.results || geoData.results.length === 0) {
+                        throw new Error('Location not found');
+                    }
+
+                    const { latitude, longitude, name } = geoData.results[0];
+
+                    const weatherRes = await fetch(
+                        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
+                    );
+                    const weatherData = await weatherRes.json();
+
+                    setweather({
+                        place: name,
+                        date: weatherData.current_weather.time.split('T')[0],
+                        time: weatherData.current_weather.time.split('T')[1],
+                        temperature: weatherData.current_weather.temperature,
+                    });
+                } catch (err) {
+                    seterror(err.message);
+                } finally {
+                    setloading(false);
+                }
+            }
+
+            return (
+                <>
+                    <input
+                        value={location}
+                        placeholder="Enter location"
+                        onChange={(e) => setlocation(e.target.value)}
+                    />
+                    <button type="submit" onClick={getWeather}> Submit </button>
+
+                    {loading && <p>Loading...</p>}
+                    {error && <p>{error}</p>}
+                    {weather && (
+                        <ul>
+                            <li>Place: {weather.place}</li>
+                            <li>Date: {weather.date}</li>
+                            <li>Time: {weather.time}</li>
+                            <li>Temperature: {weather.temperature}°C</li>
+                        </ul>
+                    )}
+                </>
+            );
+        }
+
+        function App() {
+            return (
+                <>
+                    <WeatherTable />
+                </>
+            );
+        }
+
+        const container = document.querySelector('.js-container');
+        ReactDOM.createRoot(container).render(<App />);
+    </script>
+</body>
+
+</html>
