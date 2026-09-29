@@ -16,7 +16,7 @@
         function WeatherTable() {
 
             const [weather, setweather] = React.useState(null);
-            const [location, setlocation] = React.useState('');
+            const [location, setlocation] = React.useState('London');
             const [loading, setloading] = React.useState(false);
             const [error, seterror] = React.useState(null);
 
@@ -50,6 +50,10 @@
                     setloading(false);
                 }
             }
+
+            React.useEffect(() => {
+                getWeather();
+            }, []);
 
             return (
                 <>
