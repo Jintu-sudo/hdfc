@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>React Basics</title>
+</head>
+
+<body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+        // ADDED (step 1): create the context.
+        // Think of this as an empty "shared box" that components can read from.
+        // It holds nothing yet. The Provider in App (step 2) puts a value in it.
+        // The `null` is the default value, which is only used if a component
+        // reads the context while NOT being inside a Provider.
+        const AuthContext = React.createContext(null);
+
+        // CHANGED: `setIsLoggedIn` was removed from the props list.
+        // This component no longer receives it from App. It gets it from context.
+        function LoginPage({ username, setUsername, password, setPassword, errorMessage, seterrorMessage }) {
+
+            // ADDED (step 3): read the shared value from the context.
+            // React looks upward from this component for the nearest
+            // <AuthContext.Provider> (the one in App) and returns its `value`.
+            // That value is { setIsLoggedIn }, so we destructure it here.
+            // This gives the same function we used to get from props.
+            const { setIsLoggedIn } = React.useContext(AuthContext);
+
+            function credentialsCheck() {
+                if (username === "user" && password === "hello") {
+                    // Works exactly as before. It's the same function from App's
+                    // useState, just delivered through context instead of props.
+                    setIsLoggedIn(true);
+                }
+                else {
+                    seterrorMessage("Wrong Credentials")
+                }
+            }
+
+            return (
+                <>
+                    <input
+                        value={username}
+                        placeholder="username"
+                        onChange={(e) => setUsername(e.target.value)}
+                    /><br />
+                    <input
+                        type="password"
+                        placeholder="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    /><br />
+                    <button
+                        onClick={credentialsCheck}>
+                        Log In
+                    </button>
+
+                    {errorMessage && <p>{errorMessage}</p>}
+                </>
+            );
+        }
+
+        // CHANGED: removed the `{ setIsLoggedIn }` props parameter.
+        // Dashboard takes no props anymore.
+        function Dashboard() {
+
+            // ADDED: same idea as in LoginPage. Grab setIsLoggedIn from context.
+            // Here it's used by the Log Out button below.
+            const { setIsLoggedIn } = React.useContext(AuthContext);
+
+            const [tasks, setTasks] = React.useState([{ id: 1, name: 'learn react' }, { id: 2, name: 'apply knwoledge' }]);
+            const [newTaskName, setTaskName] = React.useState('')
+            const [editingTaskId, setEditingTaskId] = React.useState(null);
+            const [editedName, setEditedName] = React.useState('');
+
+            function addTask() {
+                const newId = tasks.length > 0 ? Math.max(...tasks.map(t => t.id)) + 1 : 1;
+                // const newId = tasks.length + 1;
+                const newTask = { id: newId, name: newTaskName };
+                setTasks([...tasks, newTask]);
+                setTaskName('');
+            }
+
+            function deleteTask(idToDelete) {
+                const updatedTasks = tasks.filter((task) => task.id !== idToDelete);
+                setTasks(updatedTasks);
+            }
+
+            function editTask(idToEdit, newName) {
+                const updatedTasks = tasks.map((task) => {
+                    if (task.id === idToEdit) {
+                        return { ...task, name: newName };
+                    } else {
+                        return task;
+                    }
+                });
+                setTasks(updatedTasks);
+                setEditingTaskId(null);
+                setEditedName('');
+            }
+
+            return (
+                <>
+                    <h1>Hello welocme to dashboard</h1>
+                    {/* Unchanged line, but setIsLoggedIn now comes from context, not props */}
+                    <button
+                        onClick={() => setIsLoggedIn(false)}>
+                        Log Out
+                    </button><br />
+
+                    <h2>TODO LIST</h2>
+
+                    <input placeholder="add items"
+                        value={newTaskName}
+                        onChange={(e) => setTaskName(e.target.value)}
+                    /><br />
+
+                    <button onClick={addTask}>
+                        ADD
+                    </button>
+
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>ID</th>
+                                <th>Task</th>
+                                <th>Delete</th>
+                                <th>Edit</th>
+                            </tr>
+                            {tasks.map((task) => (
+                                <tr key={task.id}>
+                                    <td>{task.id}</td>
+                                    <td>
+                                        {editingTaskId === task.id ? (
+                                            <input
+                                                value={editedName}
+                                                onChange={(e) => setEditedName(e.target.value)}
+                                            />
+                                        ) : (
+                                            task.name
+                                        )}
+                                    </td>
+                                    <td><button onClick={() => deleteTask(task.id)}>Delete</button></td>
+                                    <td>
+                                        {editingTaskId === task.id ? (
+                                            <button onClick={() => editTask(task.id, editedName)}>Save</button>
+                                        ) : (
+                                            <button onClick={() => { setEditingTaskId(task.id); setEditedName(task.name); }}>Edit</button>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </>
+            )
+        }
+
+        function App() {
+            const [username, setUsername] = React.useState('');
+            const [password, setPassword] = React.useState('');
+            const [errorMessage, seterrorMessage] = React.useState('');
+
+            // UNCHANGED: the state still lives here in App.
+            // Context does not move or remove state. It only changes how
+            // the value reaches the child components.
+            const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+            return (
+                // ADDED (step 2): the Provider.
+                // Everything between these tags (and everything nested deeper)
+                // can read `value` using useContext(AuthContext).
+                //
+                // value={{ setIsLoggedIn }} uses double braces:
+                //   outer {} = "this is JavaScript inside JSX"
+                //   inner {} = an object literal, shorthand for { setIsLoggedIn: setIsLoggedIn }
+                //
+                // We only share setIsLoggedIn, because that's all the children need.
+                // isLoggedIn is still used right here in App to decide which page to show.
+                <AuthContext.Provider value={{ setIsLoggedIn }}>
+                    {isLoggedIn ? (
+                        // CHANGED: no setIsLoggedIn prop anymore
+                        <Dashboard />
+                    ) : (
+                        // CHANGED: no setIsLoggedIn prop anymore.
+                        // The other props are untouched because they are not shared via context.
+                        <LoginPage
+                            username={username}
+                            setUsername={setUsername}
+                            password={password}
+                            setPassword={setPassword}
+                            errorMessage={errorMessage}
+                            seterrorMessage={seterrorMessage}
+                        />
+                    )}
+                </AuthContext.Provider>
+            );
+        }
+
+        const container = document.querySelector('.js-container');
+        ReactDOM.createRoot(container).render(<App />);
+    </script>
+</body>
+
+</html>
