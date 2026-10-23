@@ -1,14 +1,4 @@
-import React from 'react';
-  
-  const ProfileSlice = () =>  {
-	return (
-	  <div>
-	  </div>
-	);
-  }
-  
-  export default ProfileSlice;
-  import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 const profileSlice = createSlice({
   name: 'profile',
