@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography'
 import ProductCard from '../components/ProductCard.jsx'
 import { categories, products } from '../data/products.js'
 
-// Home shows every product. A category page shows only its own products.
 function ProductListPage({ category }) {
   let visibleProducts = products
   let title = 'Shop action figures'

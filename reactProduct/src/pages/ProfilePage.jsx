@@ -22,7 +22,6 @@ function ProfilePage() {
   const profile = useSelector((state) => state.profile)
   const [isSaved, setIsSaved] = useState(false)
 
-  // defaultValues fills the form with what is currently saved in the store
   const {
     register,
     handleSubmit,
@@ -34,7 +33,6 @@ function ProfilePage() {
     setIsSaved(true)
   }
 
-  // Keeps the label above the text, because the inputs start out filled in
   const filledLabel = { inputLabel: { shrink: true } }
 
   return (

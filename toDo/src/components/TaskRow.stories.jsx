@@ -6,7 +6,6 @@ import TaskRow from './TaskRow.jsx'
 export default {
   title: 'Components/TaskRow',
   component: TaskRow,
-  // A <tr> must live inside a table, so wrap every story in one
   decorators: [
     (Story) => (
       <Table>

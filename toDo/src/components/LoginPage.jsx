@@ -11,16 +11,11 @@ import { AuthContext } from '../context/AuthContext.js'
 function LoginPage() {
   const { login } = useContext(AuthContext)
   const [errorMessage, setErrorMessage] = useState('')
-
-  // react-hook-form keeps track of the inputs and their errors for us
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
-
-  // register() gives back a ref + other props. MUI's TextField wants the ref
-  // on the real <input>, so we pass it through "inputRef".
   const { ref: usernameRef, ...usernameProps } = register('username', {
     required: 'Username is required',
   })
@@ -28,7 +23,6 @@ function LoginPage() {
     required: 'Password is required',
   })
 
-  // Only runs when every field passes validation
   function onSubmit(data) {
     const isValid = login(data.username, data.password)
     if (!isValid) {

@@ -15,8 +15,6 @@ function LoginPage() {
     formState: { errors },
   } = useForm()
 
-  // Runs only when every field passes validation.
-  // Like the original site, any username and password is accepted.
   function onSubmit() {
     dispatch(login())
   }

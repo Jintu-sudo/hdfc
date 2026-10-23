@@ -21,7 +21,6 @@ export default [
     },
     settings: { react: { version: 'detect' } },
     rules: {
-      // We are not using PropTypes (keeping things simple while learning)
       'react/prop-types': 'off',
     },
   },

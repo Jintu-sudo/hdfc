@@ -17,7 +17,6 @@ function ProductCard({ product }) {
     dispatch(addToCart({ productId: product.id, quantity: 1 }))
   }
 
-  // "Buy" = add to the cart, then go straight to the cart page
   function handleBuy() {
     handleAddToCart()
     dispatch(goTo('cart'))

@@ -4,7 +4,6 @@ import { AuthContext } from './AuthContext.js'
 export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  // Returns true if the credentials are right, false otherwise
   function login(username, password) {
     if (username === 'user' && password === 'hello') {
       setIsLoggedIn(true)

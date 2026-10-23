@@ -8,7 +8,7 @@ import { store } from './store/store.js'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <CssBaseline />
-    {/* Provider makes the store available to every component below it */}
+    {}
     <Provider store={store}>
       <App />
     </Provider>

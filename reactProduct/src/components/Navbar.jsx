@@ -18,10 +18,9 @@ function Navbar() {
 
   function handleLogout() {
     dispatch(logout())
-    dispatch(goTo('home')) // so the next login starts on the home page
+    dispatch(goTo('home'))
   }
 
-  // The page you are on gets an outline
   function navVariant(pageName) {
     return page === pageName ? 'outlined' : 'text'
   }

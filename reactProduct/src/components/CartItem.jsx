@@ -5,8 +5,6 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { formatPrice } from '../utils/formatPrice.js'
 
-// This component only displays things. The parent decides what the
-// buttons do by passing onQuantityChange and onRemove.
 function CartItem({ product, quantity, onQuantityChange, onRemove }) {
   return (
     <Paper variant="outlined" sx={{ display: 'flex', alignItems: 'center', gap: 2, p: 2 }}>

@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-// Which page is showing. Page names: 'home', 'anime', 'marvel', 'dc',
-// 'starwars', 'cart', 'profile', 'product'
 const navSlice = createSlice({
   name: 'nav',
   initialState: { page: 'home', selectedProductId: null },

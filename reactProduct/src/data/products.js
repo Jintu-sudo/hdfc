@@ -11,7 +11,6 @@ import naruto from '../assets/images/naruto.jpg'
 import redhood from '../assets/images/redhood.jpg'
 import spiderman from '../assets/images/spiderman.jpg'
 
-// Every product lives here once. Pages filter this list by category.
 export const products = [
   {
     id: 1,
@@ -19,7 +18,6 @@ export const products = [
     price: 34.99,
     image: batman,
     category: 'dc',
-    // Only Batman had a full product page in the original site
     description:
       'Highly detailed 7-inch Batman action figure inspired by the Arkham Knight design. Features multiple points of articulation, a soft-goods cape, and interchangeable grapple hand accessory. A must-have for any Dark Knight collection.',
     details: [
@@ -42,7 +40,6 @@ export const products = [
   { id: 12, name: 'Spider-Man Deluxe Figure', price: 54.99, image: spiderman, category: 'marvel' },
 ]
 
-// Used for the navbar links and page titles
 export const categories = [
   { id: 'anime', label: 'Anime' },
   { id: 'marvel', label: 'Marvel' },

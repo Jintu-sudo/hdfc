@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>React Basics</title>
+</head>
+
+<body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <!-- ADDED: Redux Toolkit and React-Redux from a CDN (no npm needed in this file).
+         They must come AFTER react.js and react-dom.js, because react-redux needs React.
+         Redux Toolkit becomes a global called `RTK`, react-redux becomes `ReactRedux`. -->
+    <script src="https://unpkg.com/@reduxjs/toolkit@1.9.7/dist/redux-toolkit.umd.js"></script>
+    <script src="https://unpkg.com/react-redux@8.1.3/dist/react-redux.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+        // ADDED: pull out the pieces we need from the two globals
+        const { configureStore, createSlice } = RTK;
+        const { Provider, useSelector, useDispatch } = ReactRedux;
+
+        // ADDED (step 1): the SLICE.
+        // A slice = one piece of state + the functions that are allowed to change it.
+        // This replaces `const [isLoggedIn, setIsLoggedIn] = React.useState(false)`.
+        const authSlice = createSlice({
+            name: 'auth',                          // used to label actions: 'auth/login'
+            initialState: { isLoggedIn: false },   // same as useState(false), but inside an object
+            reducers: {
+                // each reducer receives the current state and changes it.
+                // it looks like mutation, but Redux Toolkit (Immer) keeps it safe.
+                login(state) {
+                    state.isLoggedIn = true;
+                },
+                logout(state) {
+                    state.isLoggedIn = false;
+                },
+            },
+        });
+
+        // The slice gives us ready-made "action creators".
+        // login() creates the action { type: 'auth/login' }.
+        const { login, logout } = authSlice.actions;
+
+        // ADDED (step 2): the STORE, the one place where all state lives.
+        // `auth: ...` means this slice is available at state.auth
+        const store = configureStore({
+            reducer: {
+                auth: authSlice.reducer,
+            },
+        });
+
+        // CHANGED: no AuthContext anymore. The Redux store replaces it.
+        // CHANGED: LoginPage no longer needs `setIsLoggedIn`. It uses dispatch instead.
+        function LoginPage({ username, setUsername, password, setPassword, errorMessage, seterrorMessage }) {
+
+            // ADDED (step 3): dispatch is how a component SENDS an action to the store.
+            const dispatch = useDispatch();
+
+            function credentialsCheck() {
+                if (username === "user" && password === "hello") {
+                    // CHANGED: was setIsLoggedIn(true).
+                    // Now we dispatch the login action. The reducer sets isLoggedIn = true.
+                    dispatch(login());
+                }
+                else {
+                    seterrorMessage("Wrong Credentials")
+                }
+            }
+
+            return (
+                <>
+                    <input
+                        value={username}
+                        placeholder="username"
+                        onChange={(e) => setUsername(e.target.value)}
+                    /><br />
+                    <input
+                        type="password"
+                        placeholder="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    /><br />
+                    <button
+                        onClick={credentialsCheck}>
+                        Log In
+                    </button>
+
+                    {errorMessage && <p>{errorMessage}</p>}
+                </>
+            );
+        }
+
+        function Dashboard() {
+
+            // ADDED: same as in LoginPage, we need dispatch for the Log Out button
+            const dispatch = useDispatch();
+
+            const [tasks, setTasks] = React.useState([{ id: 1, name: 'learn react' }, { id: 2, name: 'apply knwoledge' }]);
+            const [newTaskName, setTaskName] = React.useState('')
+            const [editingTaskId, setEditingTaskId] = React.useState(null);
+            const [editedName, setEditedName] = React.useState('');
+
+            function addTask() {
+                const newId = tasks.length > 0 ? Math.max(...tasks.map(t => t.id)) + 1 : 1;
+                // const newId = tasks.length + 1;
+                const newTask = { id: newId, name: newTaskName };
+                setTasks([...tasks, newTask]);
+                setTaskName('');
+            }
+
+            function deleteTask(idToDelete) {
+                const updatedTasks = tasks.filter((task) => task.id !== idToDelete);
+                setTasks(updatedTasks);
+            }
+
+            function editTask(idToEdit, newName) {
+                const updatedTasks = tasks.map((task) => {
+                    if (task.id === idToEdit) {
+                        return { ...task, name: newName };
+                    } else {
+                        return task;
+                    }
+                });
+                setTasks(updatedTasks);
+                setEditingTaskId(null);
+                setEditedName('');
+            }
+
+            return (
+                <>
+                    <h1>Hello welocme to dashboard</h1>
+                    {/* CHANGED: was onClick={() => setIsLoggedIn(false)} */}
+                    <button
+                        onClick={() => dispatch(logout())}>
+                        Log Out
+                    </button><br />
+
+                    <h2>TODO LIST</h2>
+
+                    <input placeholder="add items"
+                        value={newTaskName}
+                        onChange={(e) => setTaskName(e.target.value)}
+                    /><br />
+
+                    <button onClick={addTask}>
+                        ADD
+                    </button>
+
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>ID</th>
+                                <th>Task</th>
+                                <th>Delete</th>
+                                <th>Edit</th>
+                            </tr>
+                            {tasks.map((task) => (
+                                <tr key={task.id}>
+                                    <td>{task.id}</td>
+                                    <td>
+                                        {editingTaskId === task.id ? (
+                                            <input
+                                                value={editedName}
+                                                onChange={(e) => setEditedName(e.target.value)}
+                                            />
+                                        ) : (
+                                            task.name
+                                        )}
+                                    </td>
+                                    <td><button onClick={() => deleteTask(task.id)}>Delete</button></td>
+                                    <td>
+                                        {editingTaskId === task.id ? (
+                                            <button onClick={() => editTask(task.id, editedName)}>Save</button>
+                                        ) : (
+                                            <button onClick={() => { setEditingTaskId(task.id); setEditedName(task.name); }}>Edit</button>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </>
+            )
+        }
+
+        function App() {
+            const [username, setUsername] = React.useState('');
+            const [password, setPassword] = React.useState('');
+            const [errorMessage, seterrorMessage] = React.useState('');
+
+            // CHANGED: was const [isLoggedIn, setIsLoggedIn] = React.useState(false)
+            // useSelector READS a value from the store.
+            // The function receives the whole state and returns the part we want.
+            // This component re-renders whenever that value changes.
+            const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+            return (
+                <>
+                    {isLoggedIn ? (
+                        <Dashboard />
+                    ) : (
+                        <LoginPage
+                            username={username}
+                            setUsername={setUsername}
+                            password={password}
+                            setPassword={setPassword}
+                            errorMessage={errorMessage}
+                            seterrorMessage={seterrorMessage}
+                        />
+                    )}
+                </>
+            );
+        }
+
+        const container = document.querySelector('.js-container');
+
+        // CHANGED: <App /> is wrapped in <Provider store={store}>.
+        // This makes the store available to every component inside it,
+        // the same job <AuthContext.Provider> did before.
+        ReactDOM.createRoot(container).render(
+            <Provider store={store}>
+                <App />
+            </Provider>
+        );
+    </script>
+</body>
+
+</html>

@@ -27,7 +27,6 @@ function App() {
   } else if (page === 'home') {
     content = <ProductListPage />
   } else {
-    // anime, marvel, dc, starwars
     content = <ProductListPage category={page} />
   }
 

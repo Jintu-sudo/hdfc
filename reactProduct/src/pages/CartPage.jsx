@@ -18,8 +18,6 @@ function CartPage() {
   const dispatch = useDispatch()
   const items = useSelector((state) => state.cart.items)
   const [orderPlaced, setOrderPlaced] = useState(false)
-
-  // Join the cart (ids + quantities) with the product data (name, price...)
   const lines = items.map((item) => ({
     product: products.find((p) => p.id === item.productId),
     quantity: item.quantity,

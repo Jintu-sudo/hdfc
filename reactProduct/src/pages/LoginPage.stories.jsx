@@ -6,5 +6,4 @@ export default {
   parameters: { layout: 'fullscreen' },
 }
 
-// Click "Log in" with empty fields to see the validation messages
 export const Default = {}
