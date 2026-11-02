@@ -1,11 +1,17 @@
-function LoginPage({ username, setUsername, password, setPassword, setIsLoggedIn, errorMessage, seterrorMessage }) {
+import { useState } from 'react'
+import { useAuth } from '../context/AuthContext'
+
+function LoginPage() {
+    const { setIsLoggedIn } = useAuth();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     function credentialsCheck() {
         if (username === "user" && password === "hello") {
             setIsLoggedIn(true);
-        }
-        else {
-            seterrorMessage("Wrong Credentials")
+        } else {
+            setErrorMessage("Wrong Credentials");
         }
     }
 
