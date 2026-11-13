@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { Button, Stack, TextField, Typography } from "@mui/material";
 
-export default function LoginPage({ setIsLoggedIn }) {
+export default function LoginPage({
+  setIsLoggedIn,
+  buttonColor = "primary",
+  buttonSize = "medium",
+  buttonVariant = "contained",
+  fieldSize = "medium",
+  fieldVariant = "outlined",
+}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -21,6 +28,8 @@ export default function LoginPage({ setIsLoggedIn }) {
 
       <TextField
         label="Username"
+        size={fieldSize}
+        variant={fieldVariant}
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
@@ -28,11 +37,18 @@ export default function LoginPage({ setIsLoggedIn }) {
       <TextField
         label="Password"
         type="password"
+        size={fieldSize}
+        variant={fieldVariant}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <Button variant="contained" onClick={credentialsCheck}>
+      <Button
+        color={buttonColor}
+        size={buttonSize}
+        variant={buttonVariant}
+        onClick={credentialsCheck}
+      >
         Log In
       </Button>
 
